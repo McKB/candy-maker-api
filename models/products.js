@@ -4,7 +4,12 @@ const products = (connection, Sequelize, manufacturers) => {
     name: { type: Sequelize.STRING, allowNull: false },
     yearIntroduced: { type: Sequelize.DATE },
     manufacturerId: { type: Sequelize.INTEGER, references: { model: manufacturers, key: 'id' } }
-  }, { paranoid: true })
+  }, {
+    paranoid: true,
+    defaultScope: {
+      attributes: { exclude: ['updatedAt', 'createdAt', 'deletedAt'] },
+    }
+  })
 }
 
 module.exports = products

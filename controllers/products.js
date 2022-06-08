@@ -14,12 +14,12 @@ const getAllProductsWithManufacturer = async (req, res) => {
   }
 }
 
-const getProductByIdWithManufacturer = async (req, res) => {
+const getProductByNameWithManufacturer = async (req, res) => {
   try {
-    const { id } = req.params
+    const { name } = req.params
 
-    const product = await models.Products.findOne({
-      where: { id },
+    const product = await models.Products.findAll({
+      where: { name: { [models.Op.like]: `%${name}%` } },
       include: [{ model: models.Manufacturers }]
     })
 
@@ -31,5 +31,5 @@ const getProductByIdWithManufacturer = async (req, res) => {
   }
 }
 
-module.exports = { getAllProductsWithManufacturer, getProductByIdWithManufacturer }
+module.exports = { getAllProductsWithManufacturer, getProductByNameWithManufacturer }
 
